@@ -5,7 +5,5 @@ aX = int(input("Укажите координату X точки A: "))
 aY = int(input("Укажите координату Y точки A: "))
 bX = int(input("Укажите координату X точки B: "))
 bY = int(input("Укажите координату Y точки B: "))
-a = [aX, aY]
-b = [bX, bY]
 dist = math.sqrt((bX - aX) ** 2 + (bY - aY) ** 2)
 print("Расстояние между точками A и B: ", dist)
