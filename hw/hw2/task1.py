@@ -9,3 +9,5 @@ for i in range(1, n + 1):
     dictionary[i] = 3 * i + 1
 for key, value in dictionary.items():
     print(f'{key}: {value}')
+# Вариант вывода 2:
+print(dictionary)
