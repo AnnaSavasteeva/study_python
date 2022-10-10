@@ -3,8 +3,8 @@ import field as f
 
 
 sign_empty = ''
-sign1 = ''
-sign2 = ''
+sign_h = ''
+sign_ai = ''
 field = []
 
 
@@ -16,24 +16,7 @@ def is_cell_valid(data):
     return field[x][y] == sign_empty
 
 
-def turn_human():
-    data = [-1, -1]
-    while not is_cell_valid(data):
-        data = [int(i) for i in input("Укажите ячейку: ").split()]
-        data[0] = data[0] - 1
-        data[1] = data[1] - 1
-    field[data[0]][data[1]] = sign1
-
-
-def turn_ai():
-    data = [-1, -1]
-    while not is_cell_valid(data):
-        data[0] = r.randint(0, 3)
-        data[1] = r.randint(0, 3)
-    field[data[0]][data[1]] = sign2
-
-
-def check_win(sign):
+def is_win(sign):
     for i in range(3):
         horizontal = field[i][0] == sign and field[i][1] == sign and field[i][2] == sign
         vertical = field[0][i] == sign and field[1][i] == sign and field[2][i] == sign
@@ -46,7 +29,17 @@ def check_win(sign):
     return False
 
 
-def check_draw():
+def check_win(sign, x, y):
+    is_winner = False
+    if is_cell_valid([x, y]):
+        field[x][y] = sign
+        if is_win(sign):
+            is_winner = True
+        field[x][y] = sign_empty
+    return is_winner
+
+
+def is_draw():
     for i in range(3):
         for j in range(3):
             if field[i][j] == sign_empty:
@@ -54,11 +47,40 @@ def check_draw():
     return True
 
 
+def turn_human():
+    data = [-1, -1]
+    while not is_cell_valid(data):
+        data = [int(i) for i in input("Укажите ячейку: ").split()]
+        data[0] = data[0] - 1
+        data[1] = data[1] - 1
+    field[data[0]][data[1]] = sign_h
+
+
+def turn_ai():
+    for i in range(len(field)):
+        for j in range(len(field)):
+            if check_win(sign_ai, i, j):
+                field[i][j] = sign_ai
+                return
+
+    for i in range(len(field)):
+        for j in range(len(field)):
+            if check_win(sign_h, i, j):
+                field[i][j] = sign_ai
+                return
+
+    data = [-1, -1]
+    while not is_cell_valid(data):
+        data[0] = r.randint(0, 3)
+        data[1] = r.randint(0, 3)
+    field[data[0]][data[1]] = sign_ai
+
+
 def init_globals(user_field, user_sign_empty, user1_sign, user2_sign):
-    global sign_empty, sign1, sign2, field
+    global sign_empty, sign_h, sign_ai, field
     sign_empty = user_sign_empty
-    sign1 = user1_sign
-    sign2 = user2_sign
+    sign_h = user1_sign
+    sign_ai = user2_sign
     field = user_field
 
 
@@ -68,19 +90,19 @@ def run_game(user_field, user_sign_empty, user1_sign, user2_sign):
 
     while True:
         turn_human()
-        if check_win(sign1):
+        if is_win(sign_h):
             print("Человек победил!")
             break
-        if check_draw():
+        if is_draw():
             print("Ничья!")
             break
 
         turn_ai()
         f.print_field(field)
-        if check_win(sign2):
+        if is_win(sign_ai):
             print("Робот победил!")
             break
-        if check_draw():
+        if is_draw():
             print("Ничья!")
             break
 
