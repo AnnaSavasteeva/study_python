@@ -21,10 +21,7 @@ def encode(run):
 
 
 def decode(encoded_data):
-    decoding = ''
-    for e in encoded_data:
-        decoding += e[0] * e[1]
-    return decoding
+    return ''.join(list(map(lambda e: e[0] * e[1], encoded_data)))
 
 
 encoding = encode(my_run)
