@@ -33,8 +33,4 @@ def countValueInList(lst, value):
 
 
 def getDistinctValues(lst):
-    distinctLst = []
-    for i in range(len(lst)):
-        if countValueInList(lst, lst[i]) == 1:
-            distinctLst.append(lst[i])
-    return distinctLst
+    return list(filter(lambda el: countValueInList(lst, el) == 1, lst))
