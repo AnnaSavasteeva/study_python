@@ -1,4 +1,3 @@
-import user_data as ud
+import interface
 
-ud.init_phonebook()
-print(ud.get_contact(input('Имя: ')))
+interface.run_app()
