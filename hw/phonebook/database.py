@@ -5,16 +5,26 @@ def get_db_path():
     return db_path
 
 
-def prepare_data(name, phone):
+def format_name(name):
     # здесь данные как-то обрабатываются
-    return name, phone
+    return name
 
 
-def insert_to_db(data):
-    db = open(db_path, 'w')
-    db.write(f'{data[0]} — {data[1]}\n')
-    db.close()
+def format_phone(phone):
+    # здесь данные как-то обрабатываются
+    return phone
 
 
 def get_data():
     return open(db_path, 'r')
+
+
+def export_db(path, phonebook):
+    db = open(path, 'w')
+    for name, phone in phonebook.items():
+        db.write(f'{name} — {phone}\n')
+    db.close()
+
+
+def update_db(phonebook):
+    export_db(db_path, phonebook)
