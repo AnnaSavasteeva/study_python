@@ -16,6 +16,7 @@ async def process_start(msg: types.Message):
 
 @dp.message_handler(commands=['help'])
 async def process_help(msg: types.Message):
+    # .reply - ответ на сообщение, c цитированием этого сообщения
     await msg.reply('Напиши мне что-нибудь, и я отпрпавлю этот текст тебе в ответ!')
 
 
